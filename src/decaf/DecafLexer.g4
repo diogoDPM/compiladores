@@ -38,13 +38,15 @@ RCURLY : '}';
 
 fragment LETTER : ('a'..'z' | 'A'..'Z')+;
 
-NUMBER: DIGIT* | MINUS DIGIT*;
-
 fragment MINUS: '-';
 
-fragment Plus: '+';
+fragment PLUS: '+';
 
 fragment DIGIT: ('0'..'9');
+
+NUMBER: DIGIT | MINUS DIGIT;
+
+SOMA: (NUMBER PLUS NUMBER);
 
 ID: (MINUS | LETTER)(LETTER | DIGIT)*;
 
