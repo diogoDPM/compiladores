@@ -36,19 +36,30 @@ VOID: 'void';
 LCURLY : '{';
 RCURLY : '}';
 
-fragment LETTER : ('a'..'z' | 'A'..'Z')+;
+fragment 
+LETTER : ('a'..'z' | 'A'..'Z')+;
 
-fragment MINUS: '-';
+fragment 
+MINUS: '-';
 
-fragment PLUS: '+';
+fragment 
+PLUS: '+';
 
-fragment DIGIT: ('0'..'9');
+fragment 
+EQUAL: '=';
 
-NUMBER: DIGIT | MINUS DIGIT;
+ASSING_OP: EQUAL | PLUS EQUAL | MINUS EQUAL;
+
+fragment 
+DIGIT: ('0'..'9');
+
+NUMBER: (DIGIT* | MINUS DIGIT*);
 
 SOMA: (NUMBER PLUS NUMBER);
 
 ID: (MINUS | LETTER)(LETTER | DIGIT)*;
+
+CTRLBARRA: '\n' '\t' '\\' '\"';
 
 WS_ : (' ' | '\n' ) -> skip;
 
