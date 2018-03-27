@@ -9,6 +9,29 @@ options
   language=Java;
 }
 
+BOOLEAN: 'boolean';
+
+BREAK: 'break';
+
+CALLOUT: 'callout';
+
+CLASS: 'class';
+
+CONTINUE: 'continue';
+
+ELSE: 'else';
+
+FALSE: 'false';
+
+FOR: 'for';
+
+INT: 'int';
+
+RETURN: 'return';
+
+TRUE: 'true';
+
+VOID: 'void';
 
 LCURLY : '{';
 RCURLY : '}';
