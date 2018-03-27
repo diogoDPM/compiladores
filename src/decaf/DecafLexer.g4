@@ -19,7 +19,7 @@ NUMBER: DIGIT* | MINUS DIGIT*;
 
 fragment MINUS: '-';
 
-fragmet Plus '+';
+fragment Plus: '+';
 
 fragment DIGIT: ('0'..'9');
 
