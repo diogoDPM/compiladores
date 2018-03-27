@@ -59,7 +59,7 @@ SOMA: (NUMBER PLUS NUMBER);
 
 ID: (MINUS | LETTER)(LETTER | DIGIT)*;
 
-CTRLBARRA: '\n' '\t' '\\' '\"';
+CTRLBARRA: '\n' | '\t' | '\\' | '\"';
 
 WS_ : (' ' | '\n' ) -> skip;
 
