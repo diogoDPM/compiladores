@@ -9,23 +9,32 @@ options
   language=Java;
 }
 
-tokens
-{
-  TK_class
-}
 
 LCURLY : '{';
 RCURLY : '}';
 
-ID  :
-  ('a'..'z' | 'A'..'Z')+;
+fragment LETTER : ('a'..'z' | 'A'..'Z')+;
+
+NUMBER: DIGIT* | MINUS DIGIT*;
+
+fragment MINUS: '-';
+
+fragmet Plus '+';
+
+fragment DIGIT: ('0'..'9');
+
+ID: (MINUS | LETTER)(LETTER | DIGIT)*;
 
 WS_ : (' ' | '\n' ) -> skip;
 
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
 CHAR : '\'' (ESC|~'\'') '\'';
+
 STRING : '"' (ESC|~'"')* '"';
 
 fragment
 ESC :  '\\' ('n'|'"');
+
+
+
