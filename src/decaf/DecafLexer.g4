@@ -9,51 +9,18 @@ options
   language=Java;
 }
 
-BOOLEAN: 'boolean';
+RESERVADAS : 'boolean' | 'break' | 'callout' | 'class' | 'continue' | 
+'else' | 'for' | 'int' | 'return' | 'void' | 'if';
 
-BREAK: 'break';
-
-CALLOUT: 'callout';
-
-CLASS: 'class';
-
-CONTINUE: 'continue';
-
-ELSE: 'else';
-
-FALSE: 'false';
-
-FOR: 'for';
-
-INT: 'int';
-
-RETURN: 'return';
-
-TRUE: 'true';
-
-VOID: 'void';
+BOOLEAN : 'true'|'false';
 
 LCURLY : '{';
 RCURLY : '}';
 
 ID: (MINUS | LETTER)(LETTER | DIGIT)*;
 
-fragment 
-LETTER : ('a'..'z' | 'A'..'Z')+;
-
-fragment 
-MINUS: '-';
-
-fragment 
-PLUS: '+';
-
-fragment 
-EQUAL: '=';
-
 ASSING_OP: EQUAL | PLUS EQUAL | MINUS EQUAL;
 
-fragment 
-DIGIT: ('0'..'9');
 
 NUMBER: (DIGIT* | MINUS DIGIT*);
 
@@ -72,5 +39,17 @@ STRING : '"' (ESC|~'"')* '"';
 fragment
 ESC :  '\\' ('n'|'"');
 
+fragment 
+LETTER : ('a'..'z' | 'A'..'Z')+;
 
+fragment 
+MINUS: '-';
 
+fragment 
+PLUS: '+';
+
+fragment 
+EQUAL: '=';
+
+fragment 
+DIGIT: ('0'..'9');

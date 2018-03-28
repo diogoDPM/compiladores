@@ -31,6 +31,14 @@ class Main {
 
 		        			switch (token.getType())
 		        			{
+						case DecafLexer.RESERVADAS:
+		        				type = " RESERVADAS";
+		        				break;
+
+						case DecafLexer.BOOLEAN:
+		        				type = " BOOLEANO";
+		        				break;
+
 		        			case DecafLexer.ID:
 		        				type = " IDENTIFIER";
 		        				break;
@@ -46,7 +54,9 @@ class Main {
 						case DecafLexer.CHAR:
 		        				type = " CARACTER";
 		        				break;
+
 		        			}
+
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
 		        		done = true;
