@@ -17,14 +17,14 @@ BOOLEAN : 'true'|'false';
 LCURLY : '{';
 RCURLY : '}';
 
-ID: (MINUS | LETTER)(LETTER | DIGIT)*;
+ID: (MINUS | LETTER)(LETTER | DIGITO)*;
 
-ASSING_OP: EQUAL | PLUS EQUAL | MINUS EQUAL;
+OPERADOR: EQUAL | PLUS EQUAL | MINUS EQUAL;
 
 
-NUMBER: (DIGIT* | MINUS DIGIT*);
+NUMERO: (DIGITO* | MINUS DIGITO*);
 
-SOMA: (NUMBER PLUS NUMBER);
+SOMA: (NUMERO PLUS NUMERO);
 
 CTRLBARRA: '\n' | '\t' | '\\' | '\"';
 
@@ -52,4 +52,4 @@ fragment
 EQUAL: '=';
 
 fragment 
-DIGIT: ('0'..'9');
+DIGITO: ('0'..'9');

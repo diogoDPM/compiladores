@@ -42,17 +42,29 @@ class Main {
 		        			case DecafLexer.ID:
 		        				type = " IDENTIFIER";
 		        				break;
-		        			
-						case DecafLexer.NUMBER:
+
+		        			case DecafLexer.OPERADOR:
+		        				type = " OPERADOR";
+		        				break;
+
+						case DecafLexer.NUMERO:
 		        				type = " NUMERO";
 		        				break;
-		        			
+
+		        			case DecafLexer.SOMA:
+		        				type = " SOMA";
+		        				break;
+
 						case DecafLexer.CTRLBARRA:
 		        				type = " Control Barra";
 		        				break;
 
 						case DecafLexer.CHAR:
-		        				type = " CARACTER";
+		        				type = " CHAR";
+		        				break;
+
+						case DecafLexer.STRING:
+		        				type = " STRING";
 		        				break;
 
 		        			}
