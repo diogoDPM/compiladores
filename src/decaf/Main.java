@@ -42,6 +42,10 @@ class Main {
 						case DecafLexer.CTRLBARRA:
 		        				type = " Control Barra";
 		        				break;
+
+						case DecafLexer.CHAR:
+		        				type = " CARACTER";
+		        				break;
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}

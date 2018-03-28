@@ -36,6 +36,8 @@ VOID: 'void';
 LCURLY : '{';
 RCURLY : '}';
 
+ID: (MINUS | LETTER)(LETTER | DIGIT)*;
+
 fragment 
 LETTER : ('a'..'z' | 'A'..'Z')+;
 
@@ -63,12 +65,12 @@ WS_ : (' ' | '\n' ) -> skip;
 
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
-CHAR : '\'' (ESC|~'\'') '\'';
+CHAR : '\'' (ESC|~'\'') '\'' LETTER;
 
 STRING : '"' (ESC|~'"')* '"';
 
 fragment
 ESC :  '\\' ('n'|'"');
 
-ID: (MINUS | LETTER)(LETTER | DIGIT)*;
+
 
