@@ -34,25 +34,13 @@ class Main {
 		        			case DecafLexer.ID:
 		        				type = " IDENTIFIER";
 		        				break;
-		        			}
-						case DecafLexer.DIGIT:
-		        				type = " DIGITO";
-		        				break;
-		        			}
+		        			
 						case DecafLexer.NUMBER:
 		        				type = " NUMERO";
 		        				break;
-		        			}
-						case DecafLexer.MINUS:
-		        				type = " Sinal de Menos";
-		        				break;
-		        			}
-						case DecafLexer.PLUS:
-		        				type = " Sinal de Mais";
-		        				break;
-		        			}
-						case DecafLexer.LETTER:
-		        				type = " Letra";
+		        			
+						case DecafLexer.CTRLBARRA:
+		        				type = " Control Barra";
 		        				break;
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
