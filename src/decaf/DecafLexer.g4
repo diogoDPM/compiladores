@@ -57,8 +57,6 @@ NUMBER: (DIGIT* | MINUS DIGIT*);
 
 SOMA: (NUMBER PLUS NUMBER);
 
-ID: (MINUS | LETTER)(LETTER | DIGIT)*;
-
 CTRLBARRA: '\n' | '\t' | '\\' | '\"';
 
 WS_ : (' ' | '\n' ) -> skip;
@@ -72,5 +70,5 @@ STRING : '"' (ESC|~'"')* '"';
 fragment
 ESC :  '\\' ('n'|'"');
 
-
+ID: (MINUS | LETTER)(LETTER | DIGIT)*;
 
