@@ -9,47 +9,51 @@ options
   language=Java;
 }
 
-RESERVADAS : 'boolean' | 'break' | 'callout' | 'class' | 'continue' | 
-'else' | 'for' | 'int' | 'return' | 'void' | 'if';
-
-BOOLEAN : 'true'|'false';
+tokens
+{
+  TK_class
+}
 
 LCURLY : '{';
 RCURLY : '}';
 
-ID: (MINUS | LETTER)(LETTER | DIGITO)*;
-
-OPERADOR: EQUAL | PLUS EQUAL | MINUS EQUAL;
 
 
-NUMERO: (DIGITO* | MINUS DIGITO*);
+PALAVRASRESERVADAS : 'boolean' | 'break' | 'callout' | 'class' | 'continue' | 
+'else' | 'for' | 'int' | 'return' | 'void' | 'if';
 
-SOMA: (NUMERO PLUS NUMERO);
+BOOLEAN : 'true'|'false';
 
-CTRLBARRA: '\n' | '\t' | '\\' | '\"';
+ID  : 
+  ('_'|LETRAS)(LETRAS|DIGITOS|'_')*;
 
-WS_ : (' ' | '\n' ) -> skip;
+CHAR : '\'' (COTEUDOCHAR| ESC ) '\'';
+
+STRING : '"' (COTEUDOCHAR+ | ESC)* '"';
+
+NUMEROS :  ( '0x' ('0'..'9'|'a'..'f'|'A'..'F')+) | (DIGITOS)+ ~('x');
+
+IGUAL: '==';
+
+OP : '+' | '-' | '*' | '<' | '<=' | '!=' | '&&' | ',' | ';' | '[' | '|' | '=' | '('
+| ')' | ']' | '[' | '>' | '>=';
+
+
+fragment
+PREFIXOHEXA : '0X';
+
+fragment
+COTEUDOCHAR : (' '..'!' | '#'..'&' | '('..'[' | ']'..'~');
+
+fragment
+LETRAS : ('a'..'z' | 'A'..'Z');
+
+fragment
+DIGITOS : ('0'..'9');
+
+fragment
+ESC :  '\\' ('\\' | '\"' | '\'' | 't' | 'n');
 
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
-CHAR : '\'' (ESC|~'\'') '\'' LETTER;
-
-STRING : '"' (ESC|~'"')* '"';
-
-fragment
-ESC :  '\\' ('n'|'"');
-
-fragment 
-LETTER : ('a'..'z' | 'A'..'Z')+;
-
-fragment 
-MINUS: '-';
-
-fragment 
-PLUS: '+';
-
-fragment 
-EQUAL: '=';
-
-fragment 
-DIGITO: ('0'..'9');
+WS_ : (' ' | '\n' | '\t') -> skip;

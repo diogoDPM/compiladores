@@ -26,55 +26,51 @@ class Main {
         			{
 		        		for (token=lexer.nextToken(); token.getType()!=Token.EOF; token=lexer.nextToken())
 		        		{
+				
 		        			String type = "";
 		        			String text = token.getText();
-
+							
 		        			switch (token.getType())
-		        			{
-						case DecafLexer.RESERVADAS:
-		        				type = " RESERVADAS";
-		        				break;
+		        			{								
+		        			case DecafLexer.NUMEROS:
 
-						case DecafLexer.BOOLEAN:
-		        				type = " BOOLEANO";
-		        				break;
+								type = " INTLITERAL";
 
-		        			case DecafLexer.ID:
-		        				type = " IDENTIFIER";
-		        				break;
+								break;
 
-		        			case DecafLexer.OPERADOR:
-		        				type = " OPERADOR";
-		        				break;
+							case DecafLexer.ID:
 
-						case DecafLexer.NUMERO:
-		        				type = " NUMERO";
-		        				break;
+								type = " IDENTIFIER";
 
-		        			case DecafLexer.SOMA:
-		        				type = " SOMA";
-		        				break;
+								break;
 
-						case DecafLexer.CTRLBARRA:
-		        				type = " Control Barra";
-		        				break;
+							case DecafLexer.CHAR:
 
-						case DecafLexer.CHAR:
-		        				type = " CHAR";
-		        				break;
+								type = " CHARLITERAL";
 
-						case DecafLexer.STRING:
-		        				type = " STRING";
-		        				break;
+								break;
+							case DecafLexer.BOOLEAN:
 
+								type = " BOOLEANLITERAL";
+
+								break;
+							case DecafLexer.STRING:
+
+								type = " STRINGLITERAL";
+
+								break;
 		        			}
-
+										
+							
+							
 		        			System.out.println (token.getLine() + type + " " + text);
+							
 		        		}
 		        		done = true;
         			} catch(Exception e) {
         	        	// print the error:
         	            System.out.println(CLI.infile+" "+e);
+						
         	            lexer.skip();
         	        }
         		}
@@ -89,8 +85,8 @@ class Main {
         	
         } catch(Exception e) {
         	// print the error:
+
             System.out.println(CLI.infile+" "+e);
         }
     }
 }
-
