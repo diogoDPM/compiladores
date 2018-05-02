@@ -10,40 +10,52 @@ options
   tokenVocab=DecafLexer;
 }
 
-program: TK_class ID LCURLY RCURLY EOF;
 
-program: TK_class PALAVRASRESERVADAS EOF;
+program : CLASS PROGRAM classBody EOF;
+classBody : LCURLY fieldDecl* methodDecl* RCURLY;
 
-program: TK_class BOOLEAN  EOF;
+fieldDecl :
+	TYPE 
+	fieldIdentifierDecl (COMMA fieldIdentifierDecl)* 
+	SEMICOLON;
 
-program: TK_class ID  EOF;
+fieldIdentifierDecl : 
+	(IDENTIFIER |
+		IDENTIFIER LSQUARE INTLITERAL RSQUARE ); // vetor-array ex.: i[10]	
 
-program: TK_class CHAR EOF;
+methodDecl : (TYPE | VOID) IDENTIFIER LPARENT args? RPARENT block;
+args : TYPE IDENTIFIER (COMMA args)*;
 
-program: TK_class STRING  EOF;
+block : LCURLY (varDecl)* (statement)* RCURLY ;
 
-program: TK_class NUMEROS  EOF;
+varDecl : TYPE IDENTIFIER (COMMA IDENTIFIER)* SEMICOLON;
 
-program: TK_class IGUAL EOF;
+statement : location (EQUAL|ASSIGNOP) expr SEMICOLON
+	| methodCall SEMICOLON
+	| IF LPARENT expr RPARENT block (ELSE block)?
+	| FOR IDENTIFIER EQUAL expr COMMA expr block
+	| RETURN expr? SEMICOLON
+	| BREAK SEMICOLON
+	| CONTINUE SEMICOLON
+	| block;
 
-program: TK_class OP  EOF;
+methodCall : methodName LPARENT methodCallArgs? RPARENT
+	| CALLOUT LPARENT STRINGLITERAL (COMMA calloutArgs)* RPARENT;
+methodCallArgs: expr (COMMA expr)*;
 
+calloutArgs : expr | STRINGLITERAL;
+	
+methodName : IDENTIFIER;
 
-program: TK_class 
-PREFIXOHEXA  EOF;
+location : IDENTIFIER
+	| IDENTIFIER LSQUARE expr RSQUARE;
 
-program: TK_class 
-COTEUDOCHAR  EOF;
-
-program: TK_class 
-LETRAS  EOF;
-
-program: TK_class 
-DIGITOS EOF;
-
-program: TK_class 
-ESC  EOF;
-
-program: TK_class  SL_COMMENT EOF;
-
-program: TK_class  WS_ EOF;
+expr : location
+	| methodCall
+	| literal
+	| expr (BINARYOP|UNARY) expr
+	| UNARY expr
+	| NEG expr
+	| LPARENT expr RPARENT;
+ 
+literal: BOOLEANLITERAL | INTLITERAL | CHARLITERAL;

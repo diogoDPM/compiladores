@@ -9,51 +9,64 @@ options
   language=Java;
 }
 
-tokens
-{
-  TK_class
-}
+//tokens
+//{
+//  TK_class
+//}
 
-LCURLY : '{';
-RCURLY : '}';
+// Espaço em branco
+WS_ : (' ' | '\n' | '\r' | '\t' ) -> skip;
 
-
-
-PALAVRASRESERVADAS : 'boolean' | 'break' | 'callout' | 'class' | 'continue' | 
-'else' | 'for' | 'int' | 'return' | 'void' | 'if';
-
-BOOLEAN : 'true'|'false';
-
-ID  : 
-  ('_'|LETRAS)(LETRAS|DIGITOS|'_')*;
-
-CHAR : '\'' (COTEUDOCHAR| ESC ) '\'';
-
-STRING : '"' (COTEUDOCHAR+ | ESC)* '"';
-
-NUMEROS :  ( '0x' ('0'..'9'|'a'..'f'|'A'..'F')+) | (DIGITOS)+ ~('x');
-
-IGUAL: '==';
-
-OP : '+' | '-' | '*' | '<' | '<=' | '!=' | '&&' | ',' | ';' | '[' | '|' | '=' | '('
-| ')' | ']' | '[' | '>' | '>=';
-
-
-fragment
-PREFIXOHEXA : '0X';
-
-fragment
-COTEUDOCHAR : (' '..'!' | '#'..'&' | '('..'[' | ']'..'~');
-
-fragment
-LETRAS : ('a'..'z' | 'A'..'Z');
-
-fragment
-DIGITOS : ('0'..'9');
-
-fragment
-ESC :  '\\' ('\\' | '\"' | '\'' | 't' | 'n');
-
+// Comentários
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
-WS_ : (' ' | '\n' | '\t') -> skip;
+
+// palavras reservadas
+PROGRAM                 : 'Program' ;
+CLASS 			: 'class' ;
+TYPE 			: 'boolean' | 'int' ;
+CALLOUT 		: 'callout' ;
+IF 			: 'if' ;
+ELSE 			: 'else' ;
+FOR 			: 'for' ;
+VOID 			: 'void' ;
+RETURN 			: 'return' ;
+BREAK    		: 'break' ;
+CONTINUE 		: 'continue' ;
+BOOLEANLITERAL 	: 'true' | 'false';
+
+
+LCURLY    : '{' ;
+RCURLY    : '}' ;
+LSQUARE   : '[' ;
+RSQUARE   : ']' ;
+LPARENT   : '(' ; 
+RPARENT   : ')' ;
+COMMA     : ',' ;
+SEMICOLON : ';';
+
+
+NEG : '!';
+EQUAL : '='; // separação necessarioa para caso do for
+ASSIGNOP : '+=' | '-=' | '*=' | '/=';
+UNARY : '-';
+BINARYOP : '+' | '*' | '/' | '%' | '<' | '>' | '>=' | '<=' | '!=' | '==' | '&&' | '||';
+
+
+IDENTIFIER  : ('_' | LETTER)('_' | LETTER | DIGIT)* ;
+fragment LETTER : ('a'..'z' | 'A'..'Z');
+
+INTLITERAL : HEXLITERAL | DECLITERAL ;
+fragment HEXLITERAL : '0x'(DIGIT | 'a'..'f' | 'A'..'F')+ ;
+fragment DECLITERAL : DIGIT+;
+fragment DIGIT : ('0'..'9');
+
+HEXERROR: '0x'; // captura a construção incorreta
+
+STRINGLITERAL : '"' ( ESCCHAR | VALIDCHAR )* '"';
+CHARLITERAL : '\'' ( ESCCHAR | VALIDCHAR ) '\'' ;
+
+
+fragment VALIDCHAR : ' ' | '!' | '#'..'&' | '('..'[' | ']'..'~' ;
+fragment ESCCHAR :  '\\' ('r' | 'n' | 't' | '\'' | '"' | '\\' ) ;
+
