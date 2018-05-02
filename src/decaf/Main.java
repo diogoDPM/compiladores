@@ -2,11 +2,17 @@ package decaf;
 
 import java.io.*;
 //import antlr.Token;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+import java.util.Arrays;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.gui.TreeViewer;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java6035.tools.CLI.*;
 
 class Main {
@@ -104,23 +110,35 @@ class Main {
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
         		DecafParser parser = new DecafParser(tokens);
 			
-			parser.program();
-        	}
-		else if (CLI.target == CLI.INTER)
-		{
-        		DecafLexer lexer = new DecafLexer(new ANTLRInputStream(inputStream));
-			CommonTokenStream tokens = new CommonTokenStream(lexer);
-        		DecafParser parser = new DecafParser(tokens);
-			
 			ParseTree tree = parser.program();
-			if(CLI.debug)
-				System.out.println(tree.toStringTree(parser));
+        	
+		if (CLI.debug) {
 
-			ParseTreeWalker walker = new ParseTreeWalker();
-			DecafTreeListener listener = new DecafTreeListener();
-			walker.walk(listener, tree);
-		}
+                    System.out.println(tree.toStringTree(parser));
 
+                    JFrame frame = new JFrame("Antlr AST");
+
+                    JPanel panel = new JPanel();
+
+                    TreeViewer viewr = new TreeViewer(Arrays.asList(
+
+                            parser.getRuleNames()),tree);
+
+                    viewr.setScale(1.5);
+
+                    panel.add(viewr);
+
+                    frame.add(panel);
+
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                    frame.setSize(200,200);
+
+                    frame.setVisible(true);
+
+                }
+	
+	}
         	
         } catch(Exception e) {
         	// print the error:
