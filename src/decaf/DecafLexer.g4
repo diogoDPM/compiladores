@@ -9,64 +9,62 @@ options
   language=Java;
 }
 
-//tokens
-//{
-//  TK_class
-//}
+tokens
+{
+  TK_class
+}
 
-// Espaço em branco
-WS_ : (' ' | '\n' | '\r' | '\t' ) -> skip;
+VIRGULA: ',';
+PTVIRGULA: ';';
+LPARENTS: '(';
+RPARENTS: ')';
+LCOLCHETE: '[';
+RCOLCHETE: ']';
+LCURLY : '{';
+RCURLY : '}';
+IF: 'if';
+BOOLEAN: 'boolean';
+CALLOUT: 'callout';
+CLASS: 'class';
+ELSE: 'else';
+FALSE: 'false';
+INT: 'int';
+RETURN: 'return';
+TRUE: 'true';
+FOR: 'for';
+VOID: 'void';
+BREAK: 'break';
+CONTINUE: 'continue'; 
+NUMBER: (NUM)+;
+MENOS:'-';
+EXCLA:'!';
+TK_CLASS: 'class Program';
 
-// Comentários
+
+WS_ : (' ' | '\n' | '\t' ) -> skip;
+
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
+CHAR: '\'' (ESC|'\\\\'|'a'..'z' |'A'..'Z'| '0'..'9') '\'';
 
-// palavras reservadas
-PROGRAM                 : 'Program' ;
-CLASS 			: 'class' ;
-TYPE 			: 'boolean' | 'int' ;
-CALLOUT 		: 'callout' ;
-IF 			: 'if' ;
-ELSE 			: 'else' ;
-FOR 			: 'for' ;
-VOID 			: 'void' ;
-RETURN 			: 'return' ;
-BREAK    		: 'break' ;
-CONTINUE 		: 'continue' ;
-BOOLEANLITERAL 	: 'true' | 'false';
+HEXA : '0x'[a-fA-F0-9]+;
 
+STRING: '"' (ESC|IDENTIFICADOR|NUM|' '|','|'?'|'.'|'%'|':'|'!'|'\\'|',' ~('"'))* '"';
 
-LCURLY    : '{' ;
-RCURLY    : '}' ;
-LSQUARE   : '[' ;
-RSQUARE   : ']' ;
-LPARENT   : '(' ; 
-RPARENT   : ')' ;
-COMMA     : ',' ;
-SEMICOLON : ';';
+HEX_CEPTION: '0x';
 
+ID:  IDENTIFICADOR;
 
-NEG : '!';
-EQUAL : '='; // separação necessarioa para caso do for
-ASSIGNOP : '+=' | '-=' | '*=' | '/=';
-UNARY : '-';
-BINARYOP : '+' | '*' | '/' | '%' | '<' | '>' | '>=' | '<=' | '!=' | '==' | '&&' | '||';
-
-
-IDENTIFIER  : ('_' | LETTER)('_' | LETTER | DIGIT)* ;
-fragment LETTER : ('a'..'z' | 'A'..'Z');
-
-INTLITERAL : HEXLITERAL | DECLITERAL ;
-fragment HEXLITERAL : '0x'(DIGIT | 'a'..'f' | 'A'..'F')+ ;
-fragment DECLITERAL : DIGIT+;
-fragment DIGIT : ('0'..'9');
-
-HEXERROR: '0x'; // captura a construção incorreta
-
-STRINGLITERAL : '"' ( ESCCHAR | VALIDCHAR )* '"';
-CHARLITERAL : '\'' ( ESCCHAR | VALIDCHAR ) '\'' ;
-
-
-fragment VALIDCHAR : ' ' | '!' | '#'..'&' | '('..'[' | ']'..'~' ;
-fragment ESCCHAR :  '\\' ('r' | 'n' | 't' | '\'' | '"' | '\\' ) ;
-
+ATRIBUICAO: '=';
+INCREMENTO:'+=';
+DECREMENTO:'-=';
+ARITH: '+'|'-'|'*'|'/'|'%';
+IGUALDADE: '=='|'!=';
+CONDICAO: '&&'|'||';
+RELACAO: '<'|'>'|'<='|'>=';
+fragment
+ESC :  '\\' ('n'|'t'|'\''|'"');
+fragment
+NUM : ('0'..'9');
+fragment
+IDENTIFICADOR: ('a'..'z' | 'A'..'Z' | '_' |NUM)+;

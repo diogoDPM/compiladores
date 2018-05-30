@@ -10,52 +10,66 @@ options
   tokenVocab=DecafLexer;
 }
 
+program: TK_CLASS LCURLY field_decl* method_decl* RCURLY;
 
-program : CLASS PROGRAM classBody EOF;
-classBody : LCURLY fieldDecl* methodDecl* RCURLY;
 
-fieldDecl :
-	TYPE 
-	fieldIdentifierDecl (COMMA fieldIdentifierDecl)* 
-	SEMICOLON;
+field: type ID|type ID LCOLCHETE int_literal RCOLCHETE;
 
-fieldIdentifierDecl : 
-	(IDENTIFIER |
-		IDENTIFIER LSQUARE INTLITERAL RSQUARE ); // vetor-array ex.: i[10]	
 
-methodDecl : (TYPE | VOID) IDENTIFIER LPARENT args? RPARENT block;
-args : TYPE IDENTIFIER (COMMA args)*;
+field_decl: field (VIRGULA field)* PTVIRGULA;
 
-block : LCURLY (varDecl)* (statement)* RCURLY ;
+decl: VIRGULA type ID;
+method_decl: (type|VOID) ID LPARENTS (type ID)? (type ID decl)* RPARENTS block;
 
-varDecl : TYPE IDENTIFIER (COMMA IDENTIFIER)* SEMICOLON;
+block: LCURLY var_decl* statement* RCURLY;
 
-statement : location (EQUAL|ASSIGNOP) expr SEMICOLON
-	| methodCall SEMICOLON
-	| IF LPARENT expr RPARENT block (ELSE block)?
-	| FOR IDENTIFIER EQUAL expr COMMA expr block
-	| RETURN expr? SEMICOLON
-	| BREAK SEMICOLON
-	| CONTINUE SEMICOLON
-	| block;
+var: type ID;
+var_decl: var (VIRGULA var)* PTVIRGULA;
 
-methodCall : methodName LPARENT methodCallArgs? RPARENT
-	| CALLOUT LPARENT STRINGLITERAL (COMMA calloutArgs)* RPARENT;
-methodCallArgs: expr (COMMA expr)*;
+type: INT|BOOLEAN;	
 
-calloutArgs : expr | STRINGLITERAL;
-	
-methodName : IDENTIFIER;
+statement: location assign_op expr PTVIRGULA
+	| method_call PTVIRGULA
+	|IF LPARENTS expr RPARENTS block (ELSE block)*
+	|FOR ID assign_op expr VIRGULA expr block
+	| RETURN (expr)* PTVIRGULA
+	|BREAK PTVIRGULA;
 
-location : IDENTIFIER
-	| IDENTIFIER LSQUARE expr RSQUARE;
+assign_op: ATRIBUICAO|DECREMENTO|INCREMENTO;
 
-expr : location
-	| methodCall
-	| literal
-	| expr (BINARYOP|UNARY) expr
-	| UNARY expr
-	| NEG expr
-	| LPARENT expr RPARENT;
- 
-literal: BOOLEANLITERAL | INTLITERAL | CHARLITERAL;
+call: VIRGULA expr;
+method_call: ID LPARENTS expr* (expr call)* RPARENTS
+	|CALLOUT LPARENTS string_literal (VIRGULA callout_arg)* RPARENTS;
+
+
+location: ID|ID LCOLCHETE expr RCOLCHETE;
+
+expr: location 
+	|method_call 
+	|literal 
+	|MENOS expr 
+	|expr (bin_op|MENOS) expr
+	|FOR expr (VIRGULA ID)*
+	|LPARENTS expr RPARENTS;
+
+callout_arg: expr|string_literal;
+
+bin_op: ARITH
+	|RELACAO
+	|IGUALDADE
+	|CONDICAO;
+
+
+literal:int_literal
+	|CHAR
+	|bool_literal;
+
+
+int_literal:NUMBER|HEXA;
+
+callout: string_literal (VIRGULA callout)*;
+
+
+string_literal: STRING;
+
+bool_literal:TRUE|FALSE;
