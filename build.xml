@@ -86,8 +86,8 @@
     </antlr4>
   </target>
 
-  <target name="compile" depends="parser">
-    <javac srcdir="${java}:${src}" destdir="${classes}" debug="on">
+  <target name="compile" depends="parser">   
+	<javac srcdir="${java}:${src}" destdir="${classes}" debug="on" includeantruntime="false">
       <classpath refid="libraries"/>
     </javac>
   </target>
