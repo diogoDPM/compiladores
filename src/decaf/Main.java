@@ -42,85 +42,108 @@ class Main {
 
 		        			switch (token.getType())
 		        			{
-						case DecafLexer.CHAR:
-							type = " CHARLITERAL";
-							break;
-		        			case DecafLexer.VIRGULA:
-							type = " ";
-							break;
-		        			case DecafLexer.PTVIRGULA:
-							type = " ";
-							break;
-		        			case DecafLexer.LPARENTS:
-							type = " ";
-							break;
-		        			case DecafLexer.RPARENTS:
-							type = " ";
-							break;
-		        			case DecafLexer.LCOLCHETE:
-							type = " ";
-							break;
-		        			case DecafLexer.RCOLCHETE:
-							type = " ";
-							break;
-		        			case DecafLexer.LCURLY:
-							type = " ";
-							break;
-		        			case DecafLexer.RCURLY:
-							type = " ";
-							break;
-		        			case DecafLexer.BOOLEAN:
-							type = "BOOLEAN";
-							break;
-						case DecafLexer.CALLOUT:
-							type = "CALLOUT";
-							break;
-						case DecafLexer.CLASS:
-							type = "CLASS";
-							break;
-						case DecafLexer.ELSE:
-							type = "ELSE";
-							break;
-						case DecafLexer.INT:
-							type = "INT";
-							break;
-						case DecafLexer.RETURN:
-							type = "RETURN";
-							break;
-						case DecafLexer.FALSE:
-						case DecafLexer.TRUE:
-							type = "BOOLEANLITERAL";
-							break;
-						case DecafLexer.VOID:
-							type = "VOID";
-							break;
-						case DecafLexer.FOR:
-							type = "FOR";
-							break;
-						case DecafLexer.BREAK:
-							type = "BREAK";
-							break;
-						case DecafLexer.CONTINUE:
-							type = "CONTINUE";
-							break;
-						case DecafLexer.IF:
-		        				type = " RESERVADA";
-		        				break;
-						case DecafLexer.ID:
-		        				type = " IDENTIFIER";
-		        				break;
-						case DecafLexer.NUMBER: 
-							type = "INTLITERAL";
-							break;
-						case DecafLexer.HEXA:
-							type = " HEXALIT";
-							break;
-						case DecafLexer.STRING:
-							type = "STRINGLITERAL";
-							break;
-						case DecafLexer.HEX_CEPTION:
-							throw new Exception("erro");
+							case DecafLexer.CHARLITERAL:
+								type = "CHARLITERAL";
+								break;
 
+							case DecafLexer.HEX:
+								type = "HEXADECIMAL";
+								break;
+
+							case DecafLexer.ID:
+								type = "IDENTIFIER";
+								break;
+
+							case DecafLexer.NUMEROPOSITIVO:
+								type = "NUMEROS POSITIVOS";
+								break;
+							/*		
+							case DecafLexer.OPERADORES:
+								type = "OPERADORES";
+								break;
+							*/
+							case DecafLexer.LBRACKET:
+								type = "LEFT BRACKET";
+								break;
+
+							case DecafLexer.RBRACKET:
+								type = "RIGHT BRACKET";
+								break;
+
+							case DecafLexer.PONTOVIR:
+								type = "PONTO E VIRGULA";
+								break;
+						/*	case DecafLexer.ARITMETICOS:
+								type = "ARITMETICOS";
+								break;
+
+							case DecafLexer.LOGICOS:
+								type = "LOGICOS";
+								break;
+
+							case DecafLexer.COMPARACAO:
+								type = "COMPARACAO";
+								break;
+						*/
+							case DecafLexer.ATRIBUICAO:
+								type = "ATRIBUICAO";
+								break;
+
+							case DecafLexer.STRING:
+								type = "STRINGLITERAL";
+								break;
+
+							case DecafLexer.BOOLEANO:
+								type = "BOOLEANO";
+								break;
+
+							case DecafLexer.CHAMAR:
+								type = "CHAMAR";
+								break;
+							case DecafLexer.CLASSE:
+								type = "CLASSE";
+								break;
+							case DecafLexer.SE:
+								type = "SE";
+								break;
+							case DecafLexer.SENAO:
+								type = "SENAO";
+								break;
+
+							case DecafLexer.VOID:
+								type = "VOID";
+								break;
+
+							case DecafLexer.PARA:
+								type = "SENAO";
+								break;
+
+							case DecafLexer.FORPAR:
+								type = "FORPAR";
+								break;
+
+							case DecafLexer.BREAK:
+								type = "BREAK";
+								break;
+
+							case DecafLexer.RETORNO:
+								type = "SENAO";
+								break;
+							case DecafLexer.CONTINUA:
+								type = "CONTINUA";
+								break;
+
+							case DecafLexer.FALSO:
+								type = "FALSO";
+								break;
+
+							case DecafLexer.VERDADEIRO:
+								type = "VERDADEIRO";
+								break;
+
+							case DecafLexer.INTEIRO:
+								type = "INTEIRO";
+								break;
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
@@ -193,15 +216,19 @@ class Main {
 
 					//show AST in GUI
 					JFrame frame = new JFrame("Antlr AST");
-					JPanel panel = new JPanel();
-					TreeViewer viewr = new TreeViewer(Arrays.asList(
-							parser.getRuleNames()),tree);
-					viewr.setScale(1.5);//scale a little
-					panel.add(viewr);
-					frame.add(panel);
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setSize(600,400);
-					frame.setVisible(true);
+				JPanel panel = new JPanel();
+	    JScrollPane scrollPane = new JScrollPane(panel);
+	    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+	    scrollPane.setBounds(50, 30, 300, 50);
+				TreeViewer viewr = new TreeViewer(Arrays.asList(
+						parser.getRuleNames()),tree);
+				viewr.setScale(1.5);//scale a little
+				panel.add(viewr);
+				frame.add(scrollPane);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setSize(600,400);
+				frame.setVisible(true);
 				}
 
 			}

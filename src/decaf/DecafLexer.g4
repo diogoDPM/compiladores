@@ -14,57 +14,102 @@ tokens
   TK_class
 }
 
-VIRGULA: ',';
-PTVIRGULA: ';';
-LPARENTS: '(';
-RPARENTS: ')';
-LCOLCHETE: '[';
-RCOLCHETE: ']';
 LCURLY : '{';
 RCURLY : '}';
-IF: 'if';
-BOOLEAN: 'boolean';
-CALLOUT: 'callout';
-CLASS: 'class';
-ELSE: 'else';
-FALSE: 'false';
-INT: 'int';
-RETURN: 'return';
-TRUE: 'true';
-FOR: 'for';
-VOID: 'void';
-BREAK: 'break';
-CONTINUE: 'continue'; 
-NUMBER: (NUM)+;
-MENOS:'-';
-EXCLA:'!';
-TK_CLASS: 'class Program';
-
-
-WS_ : (' ' | '\n' | '\t' ) -> skip;
-
-SL_COMMENT : '//' (~'\n')* '\n' -> skip;
-
-CHAR: '\'' (ESC|'\\\\'|'a'..'z' |'A'..'Z'| '0'..'9') '\'';
-
-HEXA : '0x'[a-fA-F0-9]+;
-
-STRING: '"' (ESC|IDENTIFICADOR|NUM|' '|','|'?'|'.'|'%'|':'|'!'|'\\'|',' ~('"'))* '"';
-
-HEX_CEPTION: '0x';
-
-ID:  IDENTIFICADOR;
-
-ATRIBUICAO: '=';
-INCREMENTO:'+=';
+LPARENT:'(';
+RPARENT:')';
+LBRACKET:'[';
+RBRACKET:']';
+PONTOVIR:';';
+VIRGULA :',';
+MULT:'*';
+DIV:'/';
+SUB: '-';
+SUM: '+';
+EXP:'^';
+REST:'%';
+EXCL:'!';
+AND: '&&';
+OR: '||';
+IGUALDADE:'==';
+DIFERENTE:'!=';
+MAIOR: '>';
+MENOR: '<';
+MAIORIG:'>=';
+MENORIG: '<=';
+INCREMENTO: '+=';
 DECREMENTO:'-=';
-ARITH: '+'|'-'|'*'|'/'|'%';
-IGUALDADE: '=='|'!=';
-CONDICAO: '&&'|'||';
-RELACAO: '<'|'>'|'<='|'>=';
-fragment
-ESC :  '\\' ('n'|'t'|'\''|'"');
-fragment
-NUM : ('0'..'9');
-fragment
-IDENTIFICADOR: ('a'..'z' | 'A'..'Z' | '_' |NUM)+;
+ATRIBUICAO:'=';
+PROGRAMA:'Program'; 
+BOOLEANO:'boolean'; 
+CHAMAR:'callout';
+CLASSE:'class';
+SENAO:'else';
+FALSO:'false' ;
+SE:'if';
+INTEIRO:'int';
+RETORNO:'return';
+VERDADEIRO:'true';
+VOID:'void';
+PARA:'for';
+FORPAR:'forpar';
+BREAK:'break';
+CONTINUA: 'continue';
+
+ESPECIAIS:'#'|'$'|'&'|'.'|':'|'?'|'@'|'_'|'`'|'|'|'~';
+
+HEX: '0x'('0'..'9'|'a'..'f'|'A'..'F')+;
+NUMEROPOSITIVO:[0-9]+;
+
+CHARLITERAL: '\''(ESC|CHAR|ESPECIAIS)'\'';
+STRING: '"' (ESC|CHAR|RCURLY|LPARENT|RPARENT|
+LBRACKET|
+RBRACKET|
+PONTOVIR|	
+VIRGULA|
+MULT|
+DIV|
+SUB|
+SUM|
+EXP|
+REST|
+EXCL|
+AND|
+OR|
+IGUALDADE|
+DIFERENTE|
+MAIOR| 
+MENOR|
+MAIORIG|
+MENORIG|
+INCREMENTO|
+DECREMENTO|
+ATRIBUICAO|
+PROGRAMA| 
+BOOLEANO| 
+CHAMAR|
+CLASSE|
+SENAO|
+FALSO|
+SE|
+INTEIRO|
+RETORNO|
+VERDADEIRO|
+VOID|
+PARA|
+FORPAR|
+BREAK|
+CONTINUA|
+ESPECIAIS|
+HEX|
+NUMEROPOSITIVO|
+LCURLY|'\\'|~('"'))*'"';
+INTEGER_LITERAL: HEX|NUMEROPOSITIVO;
+TIPOS: BOOLEANO|INTEIRO;
+ID: [_a-zA-Z][0-9_a-zA-Z]*;
+
+WS_ : (' '|'\n'|'\t'|'\r')+ -> skip;
+SL_COMMENT : '//' (~'\n')* '\n' -> skip;	
+
+fragment CHAR:('a'..'z'|'A'..'Z'|'0'..'9');
+fragment ESC: '\\' ( 'r' | 'n' | 't' | '\'' | '"' | '\\') ;

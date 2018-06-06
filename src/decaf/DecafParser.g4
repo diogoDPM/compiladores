@@ -10,66 +10,64 @@ options
   tokenVocab=DecafLexer;
 }
 
-program: TK_CLASS LCURLY field_decl* method_decl* RCURLY;
 
 
-field: type ID|type ID LCOLCHETE int_literal RCOLCHETE;
+program: CLASSE PROGRAMA LCURLY (field_decl|method_decl)* RCURLY EOF;
 
+field_decl: type ID (VIRGULA parametro)* PONTOVIR
+            |type ID LBRACKET int_literal RBRACKET (VIRGULA parametro LBRACKET int_literal RBRACKET)* PONTOVIR;
+            
+          
 
-field_decl: field (VIRGULA field)* PTVIRGULA;
+            
+method_decl: (type|VOID) ID LPARENT(parametro(VIRGULA parametro)*)? RPARENT block;
+parametro: type ID;
+block: LCURLY (var_decl|statement)* RCURLY;
 
-decl: VIRGULA type ID;
-method_decl: (type|VOID) ID LPARENTS (type ID)? (type ID decl)* RPARENTS block;
+assign_op:ATRIBUICAO
+         |DECREMENTO
+         |INCREMENTO;
 
-block: LCURLY var_decl* statement* RCURLY;
+//var_decl: type ID PONTOVIR
+//          |type VIRGULA ID * PONTOVIR;
+var_decl: type ID(variaveis)*PONTOVIR;
+variaveis: VIRGULA ID;
 
-var: type ID;
-var_decl: var (VIRGULA var)* PTVIRGULA;
+type: INTEIRO|BOOLEANO;
+statement:location assign_op expr PONTOVIR
+         |method_call PONTOVIR
+         |SE LPARENT expr RPARENT block (SENAO block)?
+         |PARA ID assign_op expr VIRGULA expr block 
+         |RETORNO (expr)? PONTOVIR
+         |BREAK PONTOVIR
+         |CONTINUA PONTOVIR
+         |block; 
 
-type: INT|BOOLEAN;	
+method_call:method_name LPARENT (expr(VIRGULA expr)*)? RPARENT
+           |CHAMAR LPARENT(string_literal(VIRGULA call_arg(VIRGULA call_arg)*)?) RPARENT;
+location: ID|ID LBRACKET expr RBRACKET;  
 
-statement: location assign_op expr PTVIRGULA
-	| method_call PTVIRGULA
-	|IF LPARENTS expr RPARENTS block (ELSE block)*
-	|FOR ID assign_op expr VIRGULA expr block
-	| RETURN (expr)* PTVIRGULA
-	|BREAK PTVIRGULA;
+expr:location
+      |method_call
+      |literal
+      |expr bin_op expr
+      |SUB expr
+      |EXCL expr
+      |LPARENT expr RPARENT;
 
-assign_op: ATRIBUICAO|DECREMENTO|INCREMENTO;
+method_name:ID;
+call_arg: expr|string_literal;
+bin_op: aritmeticos|rel_op|eq_op|cond_op;
+aritmeticos:MULT|DIV|SUB|SUM|REST|EXP;
+rel_op:MAIOR|MENOR|MAIORIG|MENORIG;
+eq_op: IGUALDADE|DIFERENTE;
+cond_op:AND|OR;
 
-call: VIRGULA expr;
-method_call: ID LPARENTS expr* (expr call)* RPARENTS
-	|CALLOUT LPARENTS string_literal (VIRGULA callout_arg)* RPARENTS;
+literal:int_literal|char_literal|bool_literal;
 
-
-location: ID|ID LCOLCHETE expr RCOLCHETE;
-
-expr: location 
-	|method_call 
-	|literal 
-	|MENOS expr 
-	|expr (bin_op|MENOS) expr
-	|FOR expr (VIRGULA ID)*
-	|LPARENTS expr RPARENTS;
-
-callout_arg: expr|string_literal;
-
-bin_op: ARITH
-	|RELACAO
-	|IGUALDADE
-	|CONDICAO;
-
-
-literal:int_literal
-	|CHAR
-	|bool_literal;
-
-
-int_literal:NUMBER|HEXA;
-
-callout: string_literal (VIRGULA callout)*;
-
-
-string_literal: STRING;
-
-bool_literal:TRUE|FALSE;
+int_literal: decimal_literal|hex_literal;
+decimal_literal: NUMEROPOSITIVO;
+hex_literal: HEX;
+bool_literal: VERDADEIRO|FALSO;
+char_literal: CHARLITERAL;
+string_literal:STRING;
