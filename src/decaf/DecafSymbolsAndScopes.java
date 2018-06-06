@@ -160,7 +160,6 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     @Override
     public void exitMethod_call(DecafParser.Method_callContext ctx) {
     }
-
     @Override
     public void enterLocation(DecafParser.LocationContext ctx) {
     }
